@@ -33,7 +33,7 @@ of those sections to manage the look and feel of the site. */
 
 .intro-section {
     height: 50%;
-    padding-top: 50px;
+    padding-top: 150px;
     text-align: center;
     background: #fff;
 }
@@ -45,7 +45,7 @@ of those sections to manage the look and feel of the site. */
     background: #eee;
 }
 
-.services-section {
+.resume-section {
     height: 50%;
     padding-top: 50px;
     text-align: center;
