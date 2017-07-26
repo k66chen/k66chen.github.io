@@ -44,7 +44,7 @@ var unit = function (game){
     }
 
     this.showMenu = function (){
-
+        this.moveAction();
     }
 
     this.moveAction = function (){
@@ -59,7 +59,7 @@ var unit = function (game){
 
         movepanel = game.add.group();
         this.moveArray = new Array();
-        this.movePathFind (this.x,this.y,this.movement,'x',moveArray);
+        this.movePathFind (this.x,this.y,this.movement,'x',this.moveArray);
         movepanel.setAll ('inputEnabled',true);
         movepanel.setAll ('alpha',0.2);
         movepanel.callAll ('events.onInputDown.add','events.onInputDown',this.move,this);
