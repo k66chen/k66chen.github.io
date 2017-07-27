@@ -4,9 +4,16 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
+@font-face {
+    font-family: "Roboto";
+    src: url('../fonts/Roboto-Regular.woff') format('woff');
+}
+
 body {
     width: 100%;
     height: 100%;
+    font-family: "Roboto";
+    font-size: 1.7em;
 }
 
 footer {
@@ -17,6 +24,11 @@ footer {
 html {
     width: 100%;
     height: 100%;
+}
+
+h1 {
+    font-weight: 600;
+    letter-spacing: 2px;
 }
 
 @media(min-width:767px) {
@@ -37,19 +49,24 @@ The padding is very important to make sure the scrollspy picks up the right area
 of those sections to manage the look and feel of the site. */
 
 .intro-section {
-    background-image: url('/assets/introcat.png');
+    position: relative;
+    background-image: url('/assets/about.png');
     height: 50%;
     padding-top: 150px;
     text-align: center;
-    background-size: auto;
-    background: #fff;
+    background-size: cover;
+}
+
+.down-arrow {
+    position: absolute;
+    bottom: 15px;
 }
 
 .about-section {
     height: 70%;
     padding-top: 50px;
     text-align: center;
-    background: #eee;
+    background: #ffcb66;
 }
 
 .resume-section {
@@ -63,5 +80,26 @@ of those sections to manage the look and feel of the site. */
     height: 70%;
     padding-top: 50px;
     text-align: center;
-    background: #eee;
+    background: #ffcb66;
 }
+
+.navbar-custom {
+    font-family: Arial,sans-serif;
+    background: #ffcb66;
+    border-color: #fff;
+}
+
+.navbar-custom .navbar-brand {
+    font-size: 180%;
+    color: #fff;
+}
+
+.navbar-default .navbar-nav>li>a {
+    font-size: 135%;
+    color: #fff;
+}
+
+span.glyphicon-chevron-down {
+    font-size: 1.2em;
+}
+

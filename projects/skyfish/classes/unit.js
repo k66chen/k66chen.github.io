@@ -44,6 +44,7 @@ var unit = function (game){
     }
 
     this.showMenu = function (){
+        //set marker here to reverse gamestate.
         this.moveAction();
     }
 
