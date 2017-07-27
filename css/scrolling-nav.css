@@ -9,6 +9,11 @@ body {
     height: 100%;
 }
 
+footer {
+    height: 5%;
+    width: 100%;
+}
+
 html {
     width: 100%;
     height: 100%;
@@ -32,28 +37,30 @@ The padding is very important to make sure the scrollspy picks up the right area
 of those sections to manage the look and feel of the site. */
 
 .intro-section {
+    background-image: url('/assets/introcat.png');
     height: 50%;
     padding-top: 150px;
     text-align: center;
+    background-size: auto;
     background: #fff;
 }
 
 .about-section {
-    height: 50%;
+    height: 70%;
     padding-top: 50px;
     text-align: center;
     background: #eee;
 }
 
 .resume-section {
-    height: 50%;
+    height: 70%;
     padding-top: 50px;
     text-align: center;
     background: #fff;
 }
 
 .project-section {
-    height: 50%;
+    height: 70%;
     padding-top: 50px;
     text-align: center;
     background: #eee;
