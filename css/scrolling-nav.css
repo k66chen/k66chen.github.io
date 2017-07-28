@@ -87,13 +87,20 @@ of those sections to manage the look and feel of the site. */
     background: #fff;
 }
 
+.project-background{
+    background-image:url('/assets/projects_back.jpg');
+    position:relative;
+    height:700px;
+}
+
 .project-section {
-    height: 70%;
+    background-color: rgba(255,203,102,0.85);
+    height: 700px;
     padding-top: 50px;
     text-align: center;
-    background: #ffcb66;
     color: #fff;
 }
+
 
 .navbar-custom {
     font-family: Arial,sans-serif;
