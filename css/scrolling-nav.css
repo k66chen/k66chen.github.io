@@ -54,7 +54,17 @@ of those sections to manage the look and feel of the site. */
     height: 50%;
     padding-top: 150px;
     text-align: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: scroll;
     background-size: cover;
+}
+
+.intro-section p {
+    text-align: left;
+}
+.intro-section h1 {
+    text-align: left;
 }
 
 .down-arrow {
@@ -67,6 +77,7 @@ of those sections to manage the look and feel of the site. */
     padding-top: 50px;
     text-align: center;
     background: #ffcb66;
+    color: #fff;
 }
 
 .resume-section {
@@ -81,6 +92,7 @@ of those sections to manage the look and feel of the site. */
     padding-top: 50px;
     text-align: center;
     background: #ffcb66;
+    color: #fff;
 }
 
 .navbar-custom {
@@ -101,5 +113,11 @@ of those sections to manage the look and feel of the site. */
 
 span.glyphicon-chevron-down {
     font-size: 1.2em;
+}
+
+.thumbnail {
+    border: 0;
+    box-shadow: none;
+    border-radius: 0;
 }
 
