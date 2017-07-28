@@ -89,6 +89,8 @@ of those sections to manage the look and feel of the site. */
 
 .project-background{
     background-image:url('/assets/projects_back.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
     position:relative;
     height:700px;
 }
