@@ -38,9 +38,11 @@ var unit = function (game){
         //this.spriteframe.collideWorldBounds = true;
 
         //create on click functions    
-        //
         this.spriteframe.inputEnabled = true;
         this.spriteframe.events.onInputDown.add(this.click,this);
+
+        //update global grid object
+        grid[x][y] = this;
     }
 
     this.showMenu = function (){
@@ -96,7 +98,6 @@ var unit = function (game){
         if (tempmv > 0){
             //check that this grid is not itself
             if (this.x == x && this.y == y){
-                console.log ("this");
                 //check up,left,right,down = skip pushing to the movearray here
                 this.movePathFind(x+50,y,tempmv,'e',moveArray);
                 this.movePathFind(x-50,y,tempmv,'w',moveArray);
@@ -124,7 +125,6 @@ var unit = function (game){
                 }
             }
             else{
-                console.log ("err");
             }
             //else this path is blocked
         }
