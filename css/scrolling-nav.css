@@ -74,6 +74,7 @@ of those sections to manage the look and feel of the site. */
 
 .about-background {
     background-image:url('/assets/about_back.jpg');
+    background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     position:relative;
@@ -114,14 +115,16 @@ of those sections to manage the look and feel of the site. */
 
 .navbar-custom {
     font-family: Arial,sans-serif;
-    background: #ffcb66;
+    background: rgba(255,203,102,0.83);
     border-color: #fff;
 }
 
-.navbar-custom .navbar-brand {
-    font-size: 180%;
+.navbar-custom .navbar-brand, .navbar-default .navbar-brand {
+    font-size: 280%;
     color: #fff;
 }
+
+
 
 .navbar-default .navbar-nav>li>a {
     font-size: 135%;
@@ -137,4 +140,11 @@ span.glyphicon-chevron-down {
     box-shadow: none;
     border-radius: 0;
 }
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav> .active>a:focus{
+    color: #555;
+    background: #ffedcb;
+}
+
+
 
