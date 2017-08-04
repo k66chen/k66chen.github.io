@@ -72,11 +72,19 @@ of those sections to manage the look and feel of the site. */
     bottom: 15px;
 }
 
+.about-background {
+    background-image:url('/assets/about_back.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position:relative;
+    height:700px;
+}
+
 .about-section {
-    height: 70%;
+    background-color: rgba(255,203,102,0.75);
+    height: 700px;
     padding-top: 50px;
     text-align: center;
-    background: #ffcb66;
     color: #fff;
 }
 
@@ -96,7 +104,7 @@ of those sections to manage the look and feel of the site. */
 }
 
 .project-section {
-    background-color: rgba(255,203,102,0.85);
+    background-color: rgba(255,203,102,0.75);
     height: 700px;
     padding-top: 50px;
     text-align: center;
