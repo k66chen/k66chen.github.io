@@ -24,6 +24,7 @@ var enemyAI = function (unit){
         for (var i =0; i< 10;i++){
             this.tempgrid[i] = new Array (16);
         }
+        movetween = null;
     };
 
     this.action = function (){
@@ -36,8 +37,7 @@ var enemyAI = function (unit){
             //a dummy movepathfinder to check each move (don't draw the panels)
             movepanel = game.add.group();
             this.movePathFind(unit.x, unit.y, unit.movement, 'x', new Array(), 0);
-            movepanel.setAll ('alpha',0.3);
-            movepanel.tint = 0xff644f;
+            movepanel.setAll ('alpha',0.25);
             this.enemyAction();
         }
     };
@@ -64,7 +64,7 @@ var enemyAI = function (unit){
                 }
                 moveArrayCopy.push(dir);
                 if (this.tempgrid[x/50][y/50] == undefined){
-                    movepanel.create (x,y,'trans');
+                    movepanel.create (x,y,'attack');
                     this.tempgrid[x/50][y/50] = moveArrayCopy;
                     this.attackAction(x,y,temppoints);
                 }else{
@@ -171,6 +171,8 @@ var enemyAI = function (unit){
             movetween = game.add.tween(unit.spriteframe).to({x:originalx,y:(originaly + 50*units)},units*150);
         }else if (initialDir == 's'){
             movetween = game.add.tween(unit.spriteframe).to({x:originalx,y:originaly - 50*units},units*150);
+        }else if (initialDir == 'x'){
+            movetween = game.add.tween(unit.spriteframe).to({x:originalx,y:originaly}, 150);
         }
 
         tweenChain.push(movetween);
@@ -222,6 +224,9 @@ var enemyAI = function (unit){
         //case no move
         if (initialDir == 'x'){
             console.log ("NOMVATK");
+            movepanel.destroy();
+            //unit.setTurnOver();
+            //enemyTriggerAi(this.count +=1);
         }
     };
 
