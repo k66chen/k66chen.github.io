@@ -48,6 +48,12 @@ h1 {
 The padding is very important to make sure the scrollspy picks up the right area when scrolled to. Adjust the margin and padding of sections and children 
 of those sections to manage the look and feel of the site. */
 
+.glyphicon {
+    font-family: inherit;
+}
+.glyphicon:before{
+    font-family:'Glyphicons Halflings';
+}
 .intro-section {
     position: relative;
     background-image: url('/assets/about.png');
@@ -62,9 +68,28 @@ of those sections to manage the look and feel of the site. */
 
 .intro-section p {
     text-align: left;
+    font-size: 150%;
 }
 .intro-section h1 {
+    font-size: 350%;
     text-align: left;
+}
+
+.about-section p{
+    font-size:120%;
+}
+.about-section  h1 {
+    font-size: 350%;
+}
+
+.intro-section .socialbtns {
+    position: absolute;
+    left: 20px;
+    color: #000000;
+}
+
+.socialbtns:hover {
+    color: #1b6d85;
 }
 
 .down-arrow {
