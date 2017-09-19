@@ -19,6 +19,8 @@ var grid = []; //this is the 2d array that holds all the map data! (10x16)
 //our battle class handles interactions between units
 var battle;
 
+var skill;
+
 //since there can only be one movepanel at a time, decare it here
 var movepanel;
 var attackpanel;
@@ -100,6 +102,8 @@ checkEnemyTurnOver = function (){
     console.log("turn" + turn);
     for (var i =0;i<allies.length;i++){
         allies[i].refreshTurn();
+        //also regenerate mana
+        allies[i].sp +=10;
     }
 };
 
@@ -135,7 +139,7 @@ var gameState = function (game){
         game.iso.anchor.setTo (0.5,0.2);
 
 
-        game.load.image('grass','assets/grass.png');
+        game.load.image('sky','assets/sky.png');
         game.load.image ("lbot",'assets/box_small.png');
         game.load.image('block','assets/block.png');
         game.load.image('ball','assets/sprites/balls.png');
@@ -150,6 +154,8 @@ var gameState = function (game){
         game.load.spritesheet('move_button', 'assets/unit_move_button.png', 100, 50);
         game.load.spritesheet('attack_button', 'assets/unit_attack_button.png', 100, 50);
         game.load.image('tile', 'assets/tile.png');
+        game.load.image('box', 'assets/box_tile.png');
+        game.load.image('skill_icon', 'assets/skill_icon.png');
         game.load.bitmapFont('nokia','assets/fonts/nokia.png','assets/fonts/nokia.xml')
     }
 
@@ -164,12 +170,13 @@ var gameState = function (game){
 
         //create our battle object
         battle = new battle (game);
+        //skill = new skill (game);
 
         menu = new menu (game);
-        game.physics.startSystem(Phaser.Physics.BOX2D);
+        //game.physics.startSystem(Phaser.Physics.BOX2D);
         game.stage.backgroundColor = '#2d2d2d';
 
-        //game.add.sprite(0,0,'grass');
+        game.add.sprite(0,0,'sky');
 
 
         isoGroup = game.add.group();
@@ -204,14 +211,36 @@ var gameState = function (game){
         grid[8][9] = block;
         grid[7][9] = block;*/
 
+
+        block = game.add.isoSprite(5*38,3*38,45,'box',0,unitSpriteGroup);
+        block.anchor.set (0.5,0);
+        block = game.add.isoSprite(6*38,3*38,45,'box',0,unitSpriteGroup);
+        block.anchor.set (0.5,0);
+        block = game.add.isoSprite(7*38,3*38,45,'box',0,unitSpriteGroup);
+        block.anchor.set (0.5,0);
+
+        grid[5][3] = block;
+        grid[6][3] = block;
+        grid[7][3] = block;
+
         var player = new unit(game);
         var player2 = new unit(game);
+        //give the ally a skill
+        var bashSkill = new skill (game);
+        var bashSkill2 = new skill (game);
+        bashSkill.bash();
+        bashSkill2.recover();
+
+        player.skillList.push(bashSkill);
+        player.skillList.push(bashSkill2);
+
         var enemy = new unit(game);
         var enemy2 = new unit(game);
         var enemy3 = new unit(game);
         //unit object (HP,sp,MOVE,x,y,enemy?)
         player.create('Platinum','plat',50,50,8,1,1,0, 30, 15);
         player2.create('Platinum','plat',50,50,8,2,2,0, 25, 5);
+
         enemy.create('Gobli1','goblin',50,50,2,1,3,1, 15, 5);
         enemy2.create('Goblin2','goblin',50,50,3,2,5,1, 12, 5);
         enemy3.create('Goblin3','goblin',50,50,2,2,3,1, 12, 5);
@@ -232,6 +261,10 @@ var gameState = function (game){
         enemeyAi.push (ai);
         enemeyAi.push (ai2);
         enemeyAi.push (ai3);
+        console.log (enemeyAi);
+
+
+        game.iso.simpleSort(unitSpriteGroup);
         //*****END*********************************************************************
         // Create a group for our tiles.
 
@@ -240,6 +273,8 @@ var gameState = function (game){
     };
 
     this.update = function(){
+
+        //hover animations
         game.iso.unproject(game.input.activePointer.position, cursorPos);
         if (movepanel !== undefined){
             movepanel.forEach(function (tile) {
@@ -254,6 +289,22 @@ var gameState = function (game){
                 else if (tile.selected && !inBounds) {
                     tile.selected = false;
                     tile.tint = 0x9bc1ff;
+                    //game.add.tween(tile).to({ isoZ: 0 }, 200, Phaser.Easing.Quadratic.InOut, true);
+                }
+            });
+        }
+        if (attackpanel !== undefined){
+            attackpanel.forEach(function (tile) {
+                var inBounds = tile.isoBounds.containsXY(cursorPos.x, cursorPos.y);
+                // If it does, do a little animation and tint change.
+                if (!tile.selected && inBounds) {
+                    tile.selected = true;
+                    tile.tint = 0xc42d46;
+                }
+                // If not, revert back to how it was.
+                else if (tile.selected && !inBounds) {
+                    tile.selected = false;
+                    tile.tint = 0xffaabe;
                     //game.add.tween(tile).to({ isoZ: 0 }, 200, Phaser.Easing.Quadratic.InOut, true);
                 }
             });
@@ -276,6 +327,7 @@ var gameState = function (game){
                 tile.anchor.set(0.5, 0);
             }
         }
+
 
         game.iso.simpleSort(isoGroup);
 

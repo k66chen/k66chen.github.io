@@ -1,7 +1,6 @@
 var battle = function (game){
 
-    this.showAttackPanels = function(unit){
-
+    this.showAttackPanels = function(unit, custom){
         //assume range is 1 for now
         attackpanel = undefined;
         attackpanel = game.add.group();
@@ -31,23 +30,21 @@ var battle = function (game){
         panel.alpha = 0.3;
         panel.tint = 0xffaabe;
 
+
         attackpanel.setAll ('inputEnabled',true);
-        attackpanel.callAll ('events.onInputDown.add','events.onInputDown',function (event){this.attackPanelClick(event,unit)},this);
+        attackpanel.callAll ('events.onInputDown.add','events.onInputDown',function (event){this.attackPanelClick(event,unit,custom)},this);
     };
 
-    this.attackPanelClick = function (event,unit){
+    this.attackPanelClick = function (event,unit,custom){
+        //custom is a custom attack function that you can fork in from skills
         game.iso.unproject(game.input.activePointer.position, cursorPos);
         attackpanel.forEach(function (tile) {
             var inBounds = tile.isoBounds.containsXY(cursorPos.x, cursorPos.y);
             // If it does, do a little animation and tint change.
-            if (!tile.selected && inBounds) {
-                tile.selected = true;
+            if (inBounds) {
                 selectedTile = tile;
             }
-            // If not, revert back to how it was.
-            else if (tile.selected && !inBounds) {
-                tile.selected = false;
-            }
+            // If not, revert b
         });
 
         event.x = selectedTile.isoX;
@@ -55,9 +52,15 @@ var battle = function (game){
 
         if (!checkGrid(event.x/tileWidth,event.y/tileWidth)){
             if (grid[event.x/tileWidth][event.y/tileWidth].isEnemy){
-                this.normalAttack(unit,grid[event.x/tileWidth][event.y/tileWidth]);
+                if (custom === undefined) {
+                    this.normalAttack(unit, grid[event.x / tileWidth][event.y / tileWidth]);
+                }else{
+                    custom(unit, grid[event.x / tileWidth][event.y / tileWidth]);
+                }
                 attackpanel.destroy();
             }
+        }else{
+            attackpanel.destroy();
         }
         lock = false;
     };
@@ -66,17 +69,25 @@ var battle = function (game){
             //attacker and defender are both unit objects
             var damage = attacker.atk - defender.def;
             if (damage < 0){ damage = 0};
-            defender.updateStatus();
             this.battleAnimation(attacker, defender, damage, count);
             defender.hp -= damage;
             //alert(defender.hp);
-            defender.updateStatus();
+
             attacker.attacked = true;
         }
     };
 
+    //=============================== S K I L L S ==========================================================
+
+
+
+
+
+
+
+
+    //===================== END SKILLS ======================================================================
     this.battleAnimation = function (attacker, defender, damage, count){
-        console.log ('mm?');
         //tween halfway towards the defending unit
 
         oldX = attacker.spriteframe.isoX;
@@ -113,10 +124,10 @@ var battle = function (game){
             texttween.start();
         },this);
         atktweenback.onComplete.add(function (){
-
             if (count !== undefined){
                 enemyTriggerAi(count +=1);
             }
+            defender.updateStatus();
         },this);
         atktween.start();
     };

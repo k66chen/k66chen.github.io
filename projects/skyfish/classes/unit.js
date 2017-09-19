@@ -1,9 +1,17 @@
 //handles syntax for a generic unit on the field
 var unit = function (game){
     this.spriteframe;
+    this.hpBar;
+    this.spBar;
+
+
     this.name;
     this.hp;
     this.sp;
+
+    this.maxhp;
+    this.maxsp;
+
     this.movement;
 
     //battle stats
@@ -33,8 +41,19 @@ var unit = function (game){
     this.isEnemy = false;
     this.isAlly = true;
 
+
+
+    //contains this unit's skills
+    this.skillList = new Array();
+
     this.getType = function (){
         return "unit";
+    };
+
+    this.dumpSkillNames = function (){
+        for (var i = 0; i< this.skillList.length;i++){
+           console.log (this.skillList[i].name);
+        }
     };
 
     //disables movement controls for this unit, turn on AI
@@ -43,7 +62,9 @@ var unit = function (game){
         //constructor for a generic unit sprite
         this.name = name;
         this.hp = hp;
+        this.maxhp = hp;
         this.sp = sp;
+        this.maxsp = sp;
         this.movement = movement;
 
         this.atk = atk;
@@ -55,11 +76,11 @@ var unit = function (game){
             this.isEnemy = true;
             this.isAlly = false;
         }
-        //draw the enemy tile under
 
         //this.spriteframe = game.add.sprite (this.x,this.y,sprite);
         this.spriteframe = game.add.isoSprite(this.x/50 * tileWidth, this.y/50 * tileWidth, 25, sprite, 0);
         this.spriteframe.anchor.set (0.5,0);
+
 
 
         isoGroup.add(this.spriteframe);
@@ -68,7 +89,6 @@ var unit = function (game){
         game.physics.arcade.enable (this.spriteframe);
         //this.spriteframe.body.gravity.y = 300;
         //this.spriteframe.collideWorldBounds = true;
-
 
         //create on click functions
         if (!this.isEnemy) {
@@ -82,7 +102,25 @@ var unit = function (game){
         this.spriteframe.body.moves = false;
         //update global grid object
         grid[x][y] = this;
+
+        this.drawHealthBar();
     };
+
+    this.drawHealthBar= function(){
+        //draw health bar
+        var barPos = {x:this.spriteframe.x,y:this.spriteframe.y};
+        this.hpBar = new HealthBar (game,barPos)
+
+        //calculate the positon
+        this.hpBar.setPercent((this.hp/this.maxhp)*100,1);
+
+   /*     this.spriteframe.addChild(this.hpBar.barSprite);
+        this.spriteframe.addChild(this.hpBar.bgSprite);*/
+    },
+
+    this.updateHealthBar = function(){
+        this.hpBar.setPercent((this.hp/this.maxhp)*100);
+    },
 
     this.showMenu = function (){
         //set marker here to reverse gamestate.
@@ -194,6 +232,7 @@ var unit = function (game){
 
 
     this.move = function (event){
+
         //move the player depending on which movepanel was picked (panel in mouse event)
         //game.add.text (0,0,"x:"+event.x+"y:"+event.y);
         //   this.spriteframe.body.velocity.x= 150;
@@ -203,15 +242,12 @@ var unit = function (game){
         var destx = event.x;
         var desty = event.y;
         //var testtext = game.add.text (0,0,"x:"+this.spriteframe.x+"dx:"+destx);
-        console.log ('event pos: ' + destx + ' ' + desty);
 
         //game.iso.unproject(game.input.activePointer.position, cursorPos);
 
-        console.log ('cursor pos: ' + cursorPos.x + ' ' + cursorPos.y);
         //var pathMoveArray = this.tempgrid[destx][desty];
         movepanel.forEach(function (tile) {
             var inBounds = tile.isoBounds.containsXY(cursorPos.x, cursorPos.y);
-            console.log (inBounds);
             // If it does, do a little animation and tint change.
             if (inBounds) {
                 selectedTile = tile;
@@ -222,16 +258,12 @@ var unit = function (game){
 
         if (selectedTile !== undefined && checkGrid(selectedTile.isoX/tileWidth,selectedTile.isoY/tileWidth)) {
             movepanel.destroy();
-
-            console.log ("grid: " + grid[selectedTile.isoX/tileWidth][selectedTile.isoY/tileWidth]);
             //this.tempmovepanel = game.add.sprite (event.x,event.y,'trans');
             //this.tempmovepanel.alpha = 0.5;
 
             this.movedone = false;
 
             this.moveTween(selectedTile);
-
-
         }
     };
 
@@ -239,6 +271,7 @@ var unit = function (game){
 
     this.moveTween = function (selectedTile){
         var tile = selectedTile
+        this.hpBar.kill();
         //console.log("tile", selectedTile)
         var isoBaseSize = 32;
         var tween = game.add.tween(this.spriteframe)
@@ -256,12 +289,14 @@ var unit = function (game){
         );
 
         tween2.onComplete.add(function (){
+            game.iso.simpleSort(unitSpriteGroup);
             this.movedone = true;
             //this.updateGrid ();
             lock = false;
             this.moved = true;
             this.updateGrid(selectedTile);
             menu.drawUnitMenu (this);
+            this.drawHealthBar();
             //move action is done
         },this);
 
@@ -338,41 +373,49 @@ var unit = function (game){
     };*/
 
     this.updateGrid = function(tile){
+
         //update the global grid to reflect our move
         delete grid[this.x/50][this.y/50];
 
         this.x = tile.isoX/tileWidth*50;
         this.y = tile.isoY/tileWidth*50;
 
-        console.log ('converted old:' + tile.isoX/tileWidth + ' ' + tile.isoY/tileWidth);
-        console.log ('new x: ' + this.x + 'new y: ' + this.y);
 
         grid[this.x/50][this.y/50] = this;
 
         tile.selected = false;
         tile.tint = 0xffffff;
-        game.iso.simpleSort(unitSpriteGroup);
+
     };
 
     this.updateStatus = function(){
        //update the status of this unit, if HP is 0 it is dead
+        //redraw health bar
+
+        this.updateHealthBar();
+
         if (this.hp <=0 ) {
             //we need to destroy this from our enemies/allies array too
             if (this.isEnemy){
                 //delete both the ai and the enemy
                 var index = enemies.indexOf (this);
                 enemies.splice (index, 1);
-                enemeyAi.splice (index,1);
+                for (var i = 0;i<enemeyAi.length;i++) {
+                    console.log (enemeyAi[i]);
+                    if (this === enemeyAi[i].unit){
+                        enemeyAi.splice(i,1);
+                    }
+                }
+                //enemeyAi.splice (index,1);
             }else{
                 var index = allies.indexOf (this);
-                console.log ("wew: " + index);
                 allies.splice (index, 1);
             }
             this.spriteframe.destroy();
+            this.hpBar.kill();
+
             delete grid[this.x/50][this.y/50];
 
-            console.log (allies);
-            console.log(enemies);
         }
     };
 

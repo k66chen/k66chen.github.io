@@ -9,7 +9,10 @@ var enemyAI = function (unit){
 
     var movepanel;
 
+
     this.count;
+
+    this.unit = unit;
     this.tempgrid = new Array (10);
     for (var i =0; i< 10;i++){
         this.tempgrid[i] = new Array (16);
@@ -102,6 +105,9 @@ var enemyAI = function (unit){
             }else{
                 attackpoints += (unit.atk - ally.def)*100;
             }
+            if (attackpoints < 0){
+                attackpoints = 0;
+            }
             return attackpoints;
     };
 
@@ -162,6 +168,7 @@ var enemyAI = function (unit){
     };
 
     this.moveTween = function (selectedTile){
+        unit.hpBar.kill();
         var tile = selectedTile
         var isoBaseSize = 32;
 
@@ -181,6 +188,7 @@ var enemyAI = function (unit){
 
         tween2.onComplete.add(function (){
             //update the global grid to reflect our move
+
             delete grid[unit.x/50][unit.y/50];
 
             unit.x =  selectedTile.isoX/tileWidth*50;
@@ -206,7 +214,8 @@ var enemyAI = function (unit){
 
 
             this.reinitiate();
-
+            unit.drawHealthBar();
+            game.iso.simpleSort(unitSpriteGroup);
             movepanel.destroy();
             //enemyTriggerAi(this.count +=1);
             unit.setTurnOver();
