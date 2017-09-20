@@ -176,10 +176,17 @@ of those sections to manage the look and feel of the site. */
     font-size: 350%;
 }
 
-.project-section .projectcards{
-    padding-left: 80px;
+@media screen and (min-width: 800px) {
+    .project-section .projectcards {
+        padding-left: 80px;
+        padding-top: 40px;
+    }
 }
-
+@media (max-width: 768px) {
+    [class*="col-"] {
+        margin-bottom: 15px;
+    }
+}
 
 .navbar-custom {
     font-family: Arial,sans-serif;
