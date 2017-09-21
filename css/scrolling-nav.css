@@ -178,7 +178,6 @@ of those sections to manage the look and feel of the site. */
 
 @media screen and (min-width: 800px) {
     .project-section .projectcards {
-        padding-left: 80px;
         padding-top: 40px;
     }
 }
@@ -233,6 +232,12 @@ span.glyphicon-chevron-down {
     transition: .5s ease;
 }
 
+
+.card {
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+}
 .card:hover .overlay {
     bottom: 0;
     height: 100%;
