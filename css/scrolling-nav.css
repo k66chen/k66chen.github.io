@@ -13,8 +13,10 @@ body {
     width: 100%;
     height: 100%;
     font-family: "Roboto";
-    font-size: 1.7em;
+    font-size: 1.3em;
 }
+
+
 
 footer {
     height: 5%;
@@ -91,7 +93,7 @@ of those sections to manage the look and feel of the site. */
 }
 
 .socialbtns:hover {
-    color: #1b6d85;
+    color: rgba(102, 91, 40, 0.95);
 }
 
 .down-arrow {
@@ -108,7 +110,7 @@ of those sections to manage the look and feel of the site. */
 }
 
 .about-section {
-    background-color: rgba(255,203,102,0.90);
+    background-color: rgba(86, 87, 86, 0.9);
     padding-top: 50px;
     padding-bottom: 50px;
     text-align: center;
@@ -126,9 +128,13 @@ of those sections to manage the look and feel of the site. */
     text-align: left;
 }
 
+.about-section a {
+    color: rgb(255, 222, 162);
+}
+
 .about-section .cat_caption{
    text-align: center;
-    font-size: 70%;
+   font-size: 85%;
 }
 
 .resume-section {
@@ -165,7 +171,7 @@ of those sections to manage the look and feel of the site. */
 }
 
 .project-section {
-    background-color: rgba(255,203,102,0.80);
+    background-color: rgba(86, 87, 86, 0.9);
     padding-top: 50px;
     text-align: center;
     padding-bottom: 70px;
@@ -174,6 +180,10 @@ of those sections to manage the look and feel of the site. */
 .project-section h1 {
     color: #fff;
     font-size: 350%;
+}
+
+.project-section a {
+    color: #000000;
 }
 
 @media screen and (min-width: 800px) {
@@ -189,20 +199,22 @@ of those sections to manage the look and feel of the site. */
 
 .navbar-custom {
     font-family: Arial,sans-serif;
-    background: rgba(255,203,102,0.83);
+    background-color: rgba(86, 87, 86, 0.9);
     border-color: #fff;
 }
 
 .navbar-custom .navbar-brand, .navbar-default .navbar-brand {
-    font-size: 280%;
+    font-size: 140%;
     color: #fff;
 }
 
-
-
 .navbar-default .navbar-nav>li>a {
-    font-size: 135%;
+    font-size: 120%;
     color: #fff;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: #eddc92;
 }
 
 span.glyphicon-chevron-down {
@@ -216,8 +228,15 @@ span.glyphicon-chevron-down {
 }
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav> .active>a:focus{
-    color: #555;
-    background: #ffedcb;
+    color: #ffffff;
+    background: rgba(237, 220, 146, 0.35);
+    text-underline: #9d9d9d;
+    border-width: 2px;
+}
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+     color: #fff;
+    background-color: transparent;
 }
 
 .overlay {
@@ -225,7 +244,7 @@ span.glyphicon-chevron-down {
     bottom: 100%;
     left: 0;
     right: 0;
-    background: rgba(255, 174, 46, 0.95);
+    background-color: rgba(86, 87, 86, 0.9);
     overflow: hidden;
     width: 100%;
     height:0;
@@ -263,7 +282,7 @@ span.glyphicon-chevron-down {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    background-color: #fff;
+    background-color: rgba(255, 222, 162, 0.95);
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
 }
@@ -414,7 +433,7 @@ span.glyphicon-chevron-down {
 
 .card-outline-warning {
     background-color: transparent;
-    border-color: #f0ad4e;
+    border-color: rgba(86, 87, 86, 0.9);
 }
 
 .card-outline-danger {
