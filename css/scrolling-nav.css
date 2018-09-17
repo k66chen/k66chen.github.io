@@ -111,7 +111,7 @@ of those sections to manage the look and feel of the site. */
 
 .about-section {
     background-color: rgba(86, 87, 86, 0.9);
-    padding-top: 50px;
+    padding-top: 30px;
     padding-bottom: 50px;
     text-align: center;
     color: #fff;
@@ -128,6 +128,10 @@ of those sections to manage the look and feel of the site. */
     text-align: left;
 }
 
+.about-section .circle_profile{
+    margin-bottom: 20px;
+}
+
 .about-section a {
     color: rgb(255, 222, 162);
 }
@@ -138,7 +142,7 @@ of those sections to manage the look and feel of the site. */
 }
 
 .resume-section {
-    padding-top: 50px;
+    padding-top: 30px;
     text-align: center;
     background: #fff;
     padding-bottom: 20px;
@@ -172,7 +176,7 @@ of those sections to manage the look and feel of the site. */
 
 .project-section {
     background-color: rgba(86, 87, 86, 0.9);
-    padding-top: 50px;
+    padding-top: 30px;
     text-align: center;
     padding-bottom: 70px;
 }
@@ -235,7 +239,8 @@ span.glyphicon-chevron-down {
 }
 
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
-     color: #fff;
+    color: #fff;
+    text-decoration: underline;
     background-color: transparent;
 }
 
